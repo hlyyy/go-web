@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 //定义各种结构体
 type Classroom struct {
 	Id   int    `json:"-"`
@@ -104,14 +106,23 @@ func CheckCourseAndClassroom(course_id, classroom_id int) bool {
 }
 
 //关联查询学生的课程
-func QueryCourseOfStudent (name string) (d Course) {
+func QueryCourseOfStudent (name string) (d []Course) {
 	var l Student
 	DB.Self.Model(&Student{}).Where(Student{Name:name}).First(&l)
 	a := l.Id
-	var b Students_course
-	DB.Self.Model(&Students_course{}).Where(Students_course{Student_id:a}).First(&b)
-	c := b.Course_id
-	DB.Self.Model(&Course{}).Where(Course{Id:c}).Find(&d)
+	var b []Students_course
+	DB.Self.Model(&Students_course{}).Where(Students_course{Student_id:a}).Find(&b)
+	fmt.Println(b)
+	var c int
+	var i Course
+	for _,u := range b {
+		i=Course{}
+		c = u.Course_id
+		fmt. Println(c)
+		DB.Self.Model(&Course{}).Where(Course{Id:c}).Find(&i)
+		fmt.Println(i)
+		d=append (d ,i)
+	}
 	return d
 }
 

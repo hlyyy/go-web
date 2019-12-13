@@ -9,7 +9,8 @@ import (
 
 func Querycourse(c *gin.Context) {
 	var data model.Student
-	var result model.Course
+	var result []model.Course
+	var l []string
 	if err := c.BindJSON(&data); err != nil {
 		c.JSON(400, gin.H{
 			"message": "Bad Request!",
@@ -24,11 +25,16 @@ func Querycourse(c *gin.Context) {
 	}
 	result = model.QueryCourseOfStudent(data.Name)
 	fmt.Println(result)
+	for _,u := range result {
+		l=append(l,u.Name)
+	}
 	s,err1 := json.Marshal(result)
 	fmt.Println(s)
 	if err1 != nil {
 		panic(err1)
 	}
-	c.JSON(200,s)
+	c.JSON(200,gin.H{
+		"message":l,
+	})
 }
 
