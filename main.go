@@ -1,14 +1,15 @@
 package main
 
-import(
-	"github.com/hly/ginny1/router"
-	"github.com/hly/ginny1/model"
+import (
 	"fmt"
+	"github.com/hly/ginny1/model"
+	"github.com/hly/ginny1/router"
 )
 
 func main() {
-	model.DB.Init()
+	model.Init()
 	defer model.DB.Close()
+
 	router.InitRouter()
 	router.Router.Run()
 	fmt.Println("Running...Successful!")

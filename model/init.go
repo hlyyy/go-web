@@ -5,7 +5,7 @@ package model
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	_"github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 type Database struct {
@@ -14,8 +14,8 @@ type Database struct {
 
 var DB *Database
 
-func (db *Database) Init() {
-	newdb,err := gorm.Open("mysql","root:huanglingyun0130@/testdb?charset=utf8&parseTime=True&loc=local")
+func Init() {
+	newdb, err := gorm.Open("mysql", "root:huanglingyun0130@/test?charset=utf8&parseTime=True")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -27,5 +27,3 @@ func (db *Database) Init() {
 func (db *Database) Close() {
 	DB.Self.Close()
 }
-
-

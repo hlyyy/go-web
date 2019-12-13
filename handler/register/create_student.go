@@ -1,27 +1,26 @@
 package register
 
 import (
-	"github.com/hly/ginny1/model"
 	"github.com/gin-gonic/gin"
+	"github.com/hly/ginny1/model"
 )
 
-func Createstudent (c *gin.Context) {
+func Createstudent(c *gin.Context) {
 	var data model.Student
 	if err := c.BindJSON(&data); err != nil {
 		c.JSON(400, gin.H{
-			"message":"Bad Requset!",
+			"message": "Bad Requset!",
 		})
 		return
 	}
 	if model.CheckStudent(data.Name) {
-		c.JSON(401,gin.H{
-			"message":"Student Already Existed!",
+		c.JSON(401, gin.H{
+			"message": "Student Already Existed!",
 		})
-		return 
+		return
 	}
-	model.CreateStudent(data.Name) 
-	c.JSON(200,gin.H{
-		"message":"Create Student Successful!",
+	model.CreateStudent(data.Name)
+	c.JSON(200, gin.H{
+		"message": "Create Student Successful!",
 	})
 }
-
