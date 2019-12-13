@@ -17,5 +17,6 @@ func InitRouter() {
 	Router.POST("/distribution/student_course", distribution.DistributeStudentAndCourse)
 	Router.POST("/distribution/course_classroom", distribution.DistributeCourseAndClassroom)
 	Router.POST("/query/query_course",query.Querycourse)
+	Router.POST("/query/query_classroom",query.Queryclassroom)
 	return
 }

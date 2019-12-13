@@ -126,7 +126,36 @@ func QueryCourseOfStudent (name string) (d []Course) {
 	return d
 }
 
-
+//关联查询学生的教室
+func QueryClassroomOfStudent (name string) (d []Classroom) {
+	var l Student
+	DB.Self.Model(&Student{}).Where(Student{Name: name}).First(&l)
+	a := l.Id
+	var b []Students_course
+	DB.Self.Model(&Students_course{}).Where(Students_course{Student_id: a}).Find(&b)
+	fmt.Println(b)
+	var c int
+	var i Courses_classroom
+	var s []Courses_classroom
+	for _, u := range b {
+		i = Courses_classroom{}
+		c = u.Course_id
+		fmt.Println(c)
+		DB.Self.Model(&Courses_classroom{}).Where(Courses_classroom{Course_id: c}).First(&i)
+		fmt.Println(i)
+		s = append(s, i)
+	}
+	var y Classroom
+	for _, x := range s {
+		y = Classroom{}
+		c = x.Classroom_id
+		fmt.Println(c)
+		DB.Self.Model(&Classroom{}).Where(Classroom{Id: c}).Find(&y)
+		fmt.Println(y)
+		d = append(d, y)
+	}
+	return d
+}
 
 
 
